@@ -1,17 +1,21 @@
+// TableModal.jsx
 const TableModal = ({ pro, showModal, setShowModal }) => {
   const handleBackdropClick = (e) => {
     if (e.target.classList.contains("backdrop")) {
       setShowModal(false);
     }
   };
+
+  if (!showModal || !pro) return null;
+
   return (
     showModal && (
       <main
         onClick={handleBackdropClick}
-        className="backdrop w-full h-full fixed bg-light bg-opacity-30"
+        className="backdrop z-50 w-full h-full fixed top-0 bg-dark bg-opacity-60"
       >
-        <section className="relative rounded-lg  bg-dark shadow-lg w-[70rem] h-[30rem]">
-          <div className="absolute top-28 left-28">
+        <div className="absolute top-28 left-28">
+          <section className="relative rounded-lg  bg-dark shadow-lg w-[70rem] h-[30rem]">
             <button
               onClick={() => setShowModal(false)}
               className="z-10 absolute right-2 top-2 bg-red-500 text-white montserrat rounded-md py-2 px-3 font-semibold tracking-wide"
@@ -31,22 +35,24 @@ const TableModal = ({ pro, showModal, setShowModal }) => {
                 </span>
                 <h3 className="montserrat mb-10">{pro.client}</h3>
                 <p className="montserrat">Project Manager : {pro.pm} </p>
-                <p className="montserrat">Note : {pro.note}</p>
+                <p className="montserrat">Note :</p>
+                <p className="montserrat pl-5">{pro.note}</p>
               </section>
               <section className="text-light p-5 h-full w-1/2 flex flex-col justify-evenly items-start">
                 <div>
                   <h1 className="helvetica text-2xl">{pro.deadline}</h1>
-                  <p className="montserrat">Crew : {pro.member}</p>
+                  <p className="montserrat">Crew :</p>
+                  <p className="montserrat pl-5">{pro.member}</p>
                 </div>
                 <div className="flex gap-3 items-center helvetica font-black tracking-wider">
                   <button
-                    onClick={window.open(`${pro.finalfile}`)}
+                    // onClick={() => window.open(pro.finalfile)}
                     className="w-56 h-32 bg-light text-dark rounded-lg"
                   >
                     Final File
                   </button>
                   <button
-                    onClick={window.open(`${pro.ba}`)}
+                    // onClick={() => window.open(pro.ba)}
                     className="w-56 h-32 bg-light text-dark rounded-lg"
                   >
                     BA
@@ -54,8 +60,8 @@ const TableModal = ({ pro, showModal, setShowModal }) => {
                 </div>
               </section>
             </main>
-          </div>
-        </section>
+          </section>
+        </div>
       </main>
     )
   );

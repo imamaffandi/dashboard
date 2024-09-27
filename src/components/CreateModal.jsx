@@ -8,10 +8,10 @@ const CreateModal = ({ showModal, setShowModal }) => {
     showModal && (
       <div>
         <main
-          className="backdrop w-full h-full fixed bg-light bg-opacity-30"
+          className="backdrop w-full z-50 h-full fixed bg-dark bg-opacity-60"
           onClick={handleBackdropClick}
         >
-          <div className="absolute top-28 left-28">
+          <div className="absolute top-10 left-28">
             <section className="relative rounded-lg  bg-dark shadow-lg w-[70rem] h-[30rem]">
               <button
                 onClick={() => setShowModal(false)}

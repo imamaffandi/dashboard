@@ -1,12 +1,12 @@
-// import { data } from "../constant/constant";
 import React, { useEffect, useState } from "react";
 import TableModal from "../components/TableModal";
 
 const MainTable = () => {
-  const [tableData, setTableData] = useState([]); // Changed from `data` to `tableData`
-  const [showModal, setShowModal] = useState(false);
+  const [tableData, setTableData] = useState([]);
+  const [showModal, setShowModal] = useState(true);
+  const [selectedRowData, setSelectedRowData] = useState(null);
+
   useEffect(() => {
-    // Make API call
     fetch("https://66f651c3436827ced9769e49.mockapi.io/datas")
       .then((response) => {
         if (!response.ok) {
@@ -22,14 +22,20 @@ const MainTable = () => {
       });
   }, []);
 
+  const handleRowClick = (rowData) => {
+    console.log("Row clicked:", rowData); // Debugging: Check if row is clicked
+    setSelectedRowData(rowData);
+    setShowModal(true);
+  };
+
   if (!tableData.length) {
     return <div>Loading...</div>;
   }
 
   return (
     <>
-      <table className="table-auto w-full mt-[4rem">
-        <thead className="sticky top-[3.5rem] transition-all duration-300 bg-dark text-light z-10 h-10 montserrat">
+      <table className="table-auto w-full mt-[3rem]">
+        <thead className="sticky top-[3.5rem] bg-dark text-light z-10 h-10 montserrat">
           <tr>
             <th>ID</th>
             <th>PROJECT TITLE</th>
@@ -46,41 +52,41 @@ const MainTable = () => {
         <tbody className="text-center border-collapse">
           {tableData.map((row, index) => (
             <tr
-              onClick={() => setShowModal(true)}
+              onClick={() => handleRowClick(row)}
               className="cursor-pointer hover:opacity-50 montserrat border-b border-gray-200"
               style={{
                 backgroundColor: index % 2 === 0 ? "#f9f9f9" : "#E8E8E8",
               }}
               key={row.id}
             >
-              <td className=" px-2 border-r border-gray-200 border-opacity-25">
+              <td className="px-2 border-r border-gray-200 border-opacity-25">
                 {row.id}
               </td>
-              <td className=" px-2 border-r border-gray-200 border-opacity-25">
+              <td className="px-2 border-r border-gray-200 border-opacity-25">
                 {row.title}
               </td>
-              <td className=" px-2 border-r border-gray-200 border-opacity-25">
+              <td className="px-2 border-r border-gray-200 border-opacity-25">
                 {row.pm}
               </td>
-              <td className=" px-2 border-r border-gray-200 border-opacity-25">
+              <td className="px-2 border-r border-gray-200 border-opacity-25">
                 {row.deadline}
               </td>
-              <td className=" px-2 border-r border-gray-200 border-opacity-25">
+              <td className="px-2 border-r border-gray-200 border-opacity-25">
                 {row.status}
               </td>
-              <td className=" px-2 border-r border-gray-200 border-opacity-25">
+              <td className="px-2 border-r border-gray-200 border-opacity-25">
                 {row.member}
               </td>
-              <td className=" px-2 border-r border-gray-200 border-opacity-25">
+              <td className="px-2 border-r border-gray-200 border-opacity-25">
                 {row.client}
               </td>
-              <td className=" px-2 border-r border-gray-200 border-opacity-25">
+              <td className="px-2 border-r border-gray-200 border-opacity-25">
                 {row.final}
               </td>
-              <td className=" px-2 border-r border-gray-200 border-opacity-25">
+              <td className="px-2 border-r border-gray-200 border-opacity-25">
                 {row.ba}
               </td>
-              <td className=" px-2 border-r border-gray-200 border-opacity-25">
+              <td className="px-2 border-r border-gray-200 border-opacity-25">
                 {row.note}
               </td>
             </tr>
@@ -88,7 +94,7 @@ const MainTable = () => {
         </tbody>
       </table>
       <TableModal
-        pro={tableData}
+        pro={selectedRowData}
         showModal={showModal}
         setShowModal={setShowModal}
       />
