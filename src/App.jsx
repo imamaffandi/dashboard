@@ -1,13 +1,14 @@
-import {Navbar, TableModal} from './components'
-import {Tables} from './pages'
+import { CreateModal, Navbar, TableModal } from "./components";
+import { Tables } from "./pages";
 const App = () => {
   return (
     <div>
       <Navbar />
-      {/* <Tables /> */}
-      <TableModal/>
+      <Tables />
+      {/* <CreateModal /> */}
+      {/* <TableModal /> */}
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;

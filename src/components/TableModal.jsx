@@ -1,40 +1,64 @@
-import { useEffect,useState } from "react";
-
-const TableModal = () => {
-  const [tableData, setTableData] = useState([]); // Changed from `data` to `tableData`
-
-  useEffect(() => {
-    // Make API call
-    fetch('https://66f651c3436827ced9769e49.mockapi.io/datas')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setTableData(data);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
-  }, []);
-
-  if (!tableData.length) {
-    return <div>Loading...</div>;
-  }
-
+const TableModal = ({ pro, showModal, setShowModal }) => {
+  const handleBackdropClick = (e) => {
+    if (e.target.classList.contains("backdrop")) {
+      setShowModal(false);
+    }
+  };
   return (
-    <main className="flex items-center justify-center h-screen bg-light bg-opacity-30">
-    <section className="relative rounded-lg  bg-dark shadow-lg w-[70rem] h-[30rem]">
-   <div className="z-10">
-   <button className="absolute right-2 top-2 bg-light text-dark rounded-md py-3 px-5">Close</button>
-   <button className="absolute left-2 bottom-2 bg-light text-dark  rounded-md py-3 px-5">Edit</button>
-   <button className="absolute right-2 bottom-2 bg-light text-dark  rounded-md py-3 px-5">Export</button>
-   </div>
-    </section>
-    </main>
-  )
-}
+    showModal && (
+      <main
+        onClick={handleBackdropClick}
+        className="backdrop w-full h-full fixed bg-light bg-opacity-30"
+      >
+        <section className="relative rounded-lg  bg-dark shadow-lg w-[70rem] h-[30rem]">
+          <div className="absolute top-28 left-28">
+            <button
+              onClick={() => setShowModal(false)}
+              className="z-10 absolute right-2 top-2 bg-red-500 text-white montserrat rounded-md py-2 px-3 font-semibold tracking-wide"
+            >
+              Close
+            </button>
 
-export default TableModal
+            <button className="z-10 absolute right-2 bottom-2 bg-green-500 text-white montserrat rounded-md py-2 px-3 font-semibold tracking-wide">
+              Edit
+            </button>
+
+            <main className="flex flex-row w-full justify-start items-center">
+              <section className="text-light p-5 h-full w-1/2">
+                <h1 className="helvetica text-2xl">{pro.title}</h1>
+                <span className="inline-flex my-2 items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
+                  {pro.status}
+                </span>
+                <h3 className="montserrat mb-10">{pro.client}</h3>
+                <p className="montserrat">Project Manager : {pro.pm} </p>
+                <p className="montserrat">Note : {pro.note}</p>
+              </section>
+              <section className="text-light p-5 h-full w-1/2 flex flex-col justify-evenly items-start">
+                <div>
+                  <h1 className="helvetica text-2xl">{pro.deadline}</h1>
+                  <p className="montserrat">Crew : {pro.member}</p>
+                </div>
+                <div className="flex gap-3 items-center helvetica font-black tracking-wider">
+                  <button
+                    onClick={window.open(`${pro.finalfile}`)}
+                    className="w-56 h-32 bg-light text-dark rounded-lg"
+                  >
+                    Final File
+                  </button>
+                  <button
+                    onClick={window.open(`${pro.ba}`)}
+                    className="w-56 h-32 bg-light text-dark rounded-lg"
+                  >
+                    BA
+                  </button>
+                </div>
+              </section>
+            </main>
+          </div>
+        </section>
+      </main>
+    )
+  );
+};
+
+export default TableModal;
